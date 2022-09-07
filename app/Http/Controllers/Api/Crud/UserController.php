@@ -100,6 +100,10 @@ class UserController extends BaseController
         }
 
         $user = User::find($id);
+
+        if (is_null($user)) {
+            return $this->sendError('User not found.');
+        }
     
         $input['password'] = bcrypt($input['password']);
 
