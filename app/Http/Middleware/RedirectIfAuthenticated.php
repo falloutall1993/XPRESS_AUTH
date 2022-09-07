@@ -2,10 +2,10 @@
 namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
-class RestrictIpAddressMiddleware
+class RedirectIfAuthenticated
 {
     // Blocked IP addresses
-    public $restrictedIp = ['192.168.0.1', '202.173.125.72', '192.168.0.3', '202.173.125.71'];
+    public $restrictedIp = ['192.168.10.1', '202.173.125.72', '192.168.0.3', '202.173.125.71'];
     /**
      * Handle an incoming request.
      *

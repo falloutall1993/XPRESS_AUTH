@@ -6,6 +6,7 @@ use Validator;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\User as UserResource;
 use App\Http\Controllers\API\BaseController as BaseController;
 
 
@@ -53,8 +54,11 @@ class UserController extends BaseController
             'email'       => $input['email'],
             'password'    => $input['password']
         ]);
+
+        $success['token'] =  $user->createToken('MyApp')->accessToken;
+        $success['name'] =  $user->name;
    
-        return $this->sendResponse(new UserResource($user), 'User created successfully.');
+        return $this->sendResponse($success, 'User register successfully.');
     }
 
     /**
@@ -86,11 +90,11 @@ class UserController extends BaseController
         $input = $request->all();
    
         $validator = Validator::make($input, [
-            'name'     => 'required | sting',
-            'email'    => 'required | email',,
-            'password' => 'required',
+            'name'     => 'string',
+            'email'    => 'email',
+            'password' => '',
         ]);
-   
+    
         if($validator->fails()){
             return $this->sendError('Validation Error.', $validator->errors());       
         }

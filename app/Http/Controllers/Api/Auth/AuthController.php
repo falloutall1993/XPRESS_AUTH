@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\Auth;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\API\BaseController as BaseController;
 
@@ -17,9 +18,9 @@ class AuthController extends BaseController
      */
     public function login(Request $request)
     {
-        if(Auth::attempt(['email' => $request->phone, 'password' => $request->password])){
+        if(Auth::attempt(['email' => $request->email, 'password' => $request->password])){
             $user                   = Auth::user();
-            $success['token']       =  $user->createToken('MyApp')-> accessToken;
+            $success['token']       = $user->createToken('XPRESS_RUN')->accessToken;
 
             return $this->sendResponse($success, 'User login successfully.');
         }

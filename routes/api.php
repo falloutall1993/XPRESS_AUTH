@@ -27,8 +27,11 @@ Route::post('create', [UserController::class, 'store']);
 
 // API need token authentication
 Route::middleware('auth:api')->group( function () {
-    Route::get('show', [UserController::class, 'index']);
-    Route::put('update/{id}', [UserController::class, 'update']);
-    Route::delete('delete/{id}', [UserController::class, 'destroy']);
+        Route::middleware('restrict')->group( function () {
+            Route::get('show', [UserController::class, 'index']);
+            Route::get('show/{id}', [UserController::class, 'show']);
+            Route::post('update/{id}', [UserController::class, 'update']);
+            Route::delete('delete/{id}', [UserController::class, 'destroy']);
+    });
     
 });
