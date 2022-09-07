@@ -22,12 +22,13 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 // API don't need authentication
 Route::post('logout', [AuthController::class, 'logout']);
-Route::post('login', [AuthController::class, 'login']);
-Route::post('create', [UserController::class, 'store']);
+
 
 // API need token authentication
-Route::middleware('auth:api')->group( function () {
-        Route::middleware('restrict')->group( function () {
+Route::middleware('restrict')->group( function () {
+    Route::post('login', [AuthController::class, 'login']);
+    Route::post('create', [UserController::class, 'store']);
+        Route::middleware('auth:api')->group( function () {
             Route::get('show', [UserController::class, 'index']);
             Route::get('show/{id}', [UserController::class, 'show']);
             Route::post('update/{id}', [UserController::class, 'update']);
