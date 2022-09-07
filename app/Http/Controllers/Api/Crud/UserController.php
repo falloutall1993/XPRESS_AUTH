@@ -85,7 +85,7 @@ class UserController extends BaseController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, User $user)
+    public function update(Request $request,$id)
     {
         $input = $request->all();
    
@@ -98,6 +98,8 @@ class UserController extends BaseController
         if($validator->fails()){
             return $this->sendError('Validation Error.', $validator->errors());       
         }
+
+        $user = User::find($id);
     
         $input['password'] = bcrypt($input['password']);
 
